@@ -1,9 +1,10 @@
 package top.sxrhhh.metaweblogClient.struct;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Base64;
 import java.util.Map;
 
 /**
@@ -18,11 +19,16 @@ public class FileData extends Struct {
     private String name;
     private String type;
 
-    public FileData() {
-    }
+    /**
+     * 空构造方法.
+     * @deprecated 处理一个文件数据,还要读取成字节过于复杂
+     */
+    public FileData() {}
 
     /**
-     *
+     * 文件类构造方法
+     * <p>直接将File文件存入FileData类中<br>
+     * <b>强烈推荐!!!</b>
      * @author Sxrhhh
      * 2022/5/6 18:19
      * @param file 存入的文件对象(自动配置属性)

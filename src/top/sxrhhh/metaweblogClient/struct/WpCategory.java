@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * 博客分类
- * @author 19149
+ * @author Sxrhhh
  * 2022/5/4 0:01
  * @version 1.0
  * @since 1.8
@@ -15,11 +15,14 @@ public class WpCategory extends Struct {
     private Integer parent_id;
     private String description;
 
+    /**
+     * 空构造方法.
+     */
     public WpCategory() {
     }
 
     /**
-     * 
+     * 最精简构造方法.
      * @author Sxrhhh
      * 2022/5/6 18:23
      * @param name 分类名称
@@ -31,7 +34,7 @@ public class WpCategory extends Struct {
     }
 
     /**
-     *
+     * 可初始化别名和描述的构造方法.
      * @author Sxrhhh
      * 2022/5/6 13:47
      * @param name 分类名称

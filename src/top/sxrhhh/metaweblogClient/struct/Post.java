@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * Post博客文章类
+ * Post博客文章类.
  * @author Sxrhhh
  * 2022/5/5 12:36
  * @version 1.0
@@ -17,11 +17,14 @@ public class Post extends Struct {
     private String title;
     private String[] categories;
 
+    /**
+     * 空构造方法
+     */
     public Post() {
     }
 
     /**
-     *
+     * 最精简的构造方法
      * @author Sxrhhh
      * 2022/5/6 18:18
      * @param dateCreated 创建时间(可以直接new Date)
@@ -35,7 +38,7 @@ public class Post extends Struct {
     }
 
     /**
-     *
+     * 将文章加入分类的构造方法
      * @author Sxrhhh
      * 2022/5/6 13:50
      * @param dateCreated 创建时间(可以直接new Date)

@@ -3,7 +3,8 @@ package top.sxrhhh.metaweblogClient.struct;
 import java.util.Map;
 
 /**
- * TODO
+ * Url信息类.
+ * <p>存储URL信息,只有一个URL字符串对象,似乎并没有什么卵用
  * @author 19149
  * 2022/5/3 23:39
  * @version 1.0
@@ -13,15 +14,18 @@ public class UrlData extends Struct {
 
     private String url;
 
+    /**
+     * 空构造方法
+     */
     public UrlData() {
     }
 
 
     /**
-     *
+     * 带参构造方法
      * @author Sxrhhh
      * 2022/5/6 13:49
-     * @param url URL对象
+     * @param url URL字符串对象
      */
     public UrlData(String url) {
         this.url = url;

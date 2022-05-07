@@ -14,10 +14,43 @@ import java.util.Map;
 
 /**
  * metaweblog的客户端,负责进行xmlrpc的沟通,拥有许多方法可供直接使用.
+ * <p>使用方法:(以新建一个博客文章为例)<br>
+ * 1. 你要创建一个Client对象:<br>
+ * 2. 准备好参数<br>
+ * 3. 上传命令,并处理异常<br><br>
+ * 代码示例:
+ * <pre>
+ *     {@code
+ *        public static void newPostTest() {
+ *            // 准备好命令所需参数(新建Post对象)
+ *            Post post = new Post(new Date(), "# This is a post\n> You can see the Post\n", "Test");
+ *            // 准备好返回值(自己看方法注释的返回类型)
+ *            String result = null;
+ *            // 创建连接客户端
+ *            try {   // 自己解决抛出的异常
+ *                Client client = new Client("https://www.cycode.club/xmlrpc.php");
+ *                result = client.newPost("default", "S*******u", "******", post, false);
+ *            } catch (MalformedURLException e) {
+ *                e.printStackTrace();    // 一般为URL格式错误
+ *            } catch (XmlRpcException e) {
+ *                e.printStackTrace();    // 一般为参数不全、服务器错误、URL输入错误
+ *            }
+ *            // 输出结果
+ *            System.out.println(result);
+ *        }
+ *     }
+ * </pre>
  * @author Sxrhhh
  * 创建于: 2022/5/5 12:38
  * @version 1.0
  * @since 1.8
+ *
+ * @see top.sxrhhh.metaweblogClient.struct.BlogInfo
+ * @see top.sxrhhh.metaweblogClient.struct.WpCategory
+ * @see top.sxrhhh.metaweblogClient.struct.Post
+ * @see top.sxrhhh.metaweblogClient.struct.UrlData
+ * @see top.sxrhhh.metaweblogClient.struct.FileData
+ * @see top.sxrhhh.metaweblogClient.struct.CategoryInfo
  */
 public class Client {
 
@@ -51,7 +84,11 @@ public class Client {
     }
 
     /**
-     * 删除一篇博客
+     * 删除一篇文章.
+     * <p>通常,我們需要获取appkey才能使用此方法,<br>
+     * 这跟网站本身有关,通常不常用<br>
+     * (悠着点,好好去网站上亲自删除博客).
+     *
      * @author Sxrhhh
      * 2022/5/5 13:27
      * @param appKey 网站key
@@ -72,7 +109,16 @@ public class Client {
     }
 
     /**
-     *
+     * 获取一篇博客内容.
+     * <p>前排提醒,本方法可能与wordpress中的部分插件不兼容.
+     * 已知不兼容插件:editor.md(找不到IXR_Message类).
+     * <p>示例:<br>
+     * <pre>
+     *     {@code
+     *      Post result = client.getPost("2178", "LiHua", "LihuaPasswd");
+     *      System.out.println(result.getDescription());
+     *     }
+     * </pre>
      * @param postid 文章ID
      * @param username 用户名
      * @param password 密码
@@ -93,10 +139,20 @@ public class Client {
     }
 
     /**
-     * 新建一个媒体(上传媒体)
+     * 新建一个媒体(上传媒体).
+     * <p>向博客的媒体库中上传一个媒体,通常为图片和视频文件,其他的应该也可以,
+     * 遵循Internet的MIME类型,方便上传文件(比较重要).
+     * <p>示例:
+     * <pre>
+     *     {@code
+     *      FileData file = new FileData(new File("D:/test.gif"));
+     *      UrlData result = client.newMediaObject("default", "LiHua", "LihuaPasswd", file);
+     *      System.out.println(result.getUrl());
+     *     }
+     * </pre>
      * @author Sxrhhh
      * 2022/5/6 13:02
-     * @param blogid 默认为"default"
+     * @param blogid 对于单站点,默认为"default" 或是 "0"
      * @param username 用户名
      * @param password 密码
      * @param file FileData类
@@ -115,7 +171,17 @@ public class Client {
     }
 
     /**
-     *
+     * 新建一篇博客文章.
+     * <p>向网站上上传一篇博客,以纯文本字符串形式,可以为markdown文件的内容<br>
+     * 返回新建文本的Postid.(比较重要)
+     * <p>示例:(见本类自身文档获取更多信息)
+     * <pre>
+     *     {@code
+     *      Post post = new Post(new Date(), "# This is a post\n> You can see the Post\n", "Test");
+     *      String result = client.newPost("default", "LiHua", "LiHuaPasswd", post, true);
+     *      System.out.println(result);
+     *     }
+     * </pre>
      * @author Sxrhhh
      * 2022/5/5 13:48
      * @param blogid 默认为"default"
@@ -137,10 +203,19 @@ public class Client {
     }
 
     /**
-     * 新建一个分类
+     * 新建一个分类.
+     * <p>向网站要求新建一个分类(使用{@code WpCategory}类),返回它的ID
+     * <p>示例:
+     * <pre>
+     *     {@code
+     *      WpCategory cate = new WpCategory("java学习路线", 0);
+     *      Integer result = client.newCategory("default", "LiHua", "LihuaPasswd", cate);
+     *      System.out.println(result);
+     *     }
+     * </pre>
      * @author Sxrhhh
      * 2022/5/6 18:24
-     * @param blog_id 默认为"default"
+     * @param blog_id 默认为"default" 或 "0"
      * @param username 博客用户名
      * @param password 博客密码
      * @param category 新建的分类信息
@@ -181,7 +256,7 @@ public class Client {
     }
 
     /**
-     * 设置了本对象客户端和服务器(为客户传入的url)
+     * 设置了本对象客户端和服务器(为客户传入的url).
      * @author Sxrhhh
      * @date 2022/5/5 13:04
      */
