@@ -75,7 +75,12 @@ public class Post extends Struct {
         dateCreated = (Date) struct.get("dateCreated");
         description = (String) struct.get("description");
         title = (String) struct.get("title");
-        categories = (String[]) struct.get("categories");
+        // 生成categories
+        Object[] ob =  (Object[]) struct.get("categories");
+        categories = new String[ob.length];
+        for (int i = 0; i < ob.length; i++) {
+            categories[i] = (String) ob[i];
+        }
     }
 
     public Date getDateCreated() {
