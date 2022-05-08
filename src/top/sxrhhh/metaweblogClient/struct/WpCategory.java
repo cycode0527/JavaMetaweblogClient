@@ -49,6 +49,14 @@ public class WpCategory extends Struct {
         this.description = description;
     }
 
+    /**
+     * 直接通过结构体struct对象创建的构造方法.
+     * @param struct 传入一个Map对象
+     */
+    public WpCategory(Map<String, Object> struct) {
+        this.setStruct(struct);
+    }
+
     @Override
     public void initMap() {
         super.initMap();

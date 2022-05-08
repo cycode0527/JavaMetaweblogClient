@@ -53,6 +53,14 @@ public class Post extends Struct {
         this.categories = categories;
     }
 
+    /**
+     * 直接通过结构体struct对象创建的构造方法
+     * @param struct 传入一个Map对象
+     */
+    public Post(Map<String, Object> struct) {
+        this.setStruct(struct);
+    }
+
     @Override
     public void initMap() {
         super.initMap();
@@ -80,9 +88,11 @@ public class Post extends Struct {
         title = (String) struct.get("title");
         // 生成categories
         Object[] ob =  (Object[]) struct.get("categories");
-        categories = new String[ob.length];
-        for (int i = 0; i < ob.length; i++) {
-            categories[i] = (String) ob[i];
+        if (ob != null) {
+            categories = new String[ob.length];
+            for (int i = 0; i < ob.length; i++) {
+                categories[i] = (String) ob[i];
+            }
         }
     }
 

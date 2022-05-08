@@ -17,6 +17,9 @@ public class CategoryInfo extends Struct {
     private String title;
     private String categoryid;
 
+    /**
+     * 空构造方法
+     */
     public CategoryInfo() {
     }
 
@@ -36,6 +39,14 @@ public class CategoryInfo extends Struct {
         this.rssUrl = rssUrl;
         this.title = title;
         this.categoryid = categoryid;
+    }
+
+    /**
+     * 直接通过结构体struct对象创建的构造方法.
+     * @param struct 传入一个Map对象
+     */
+    public CategoryInfo(Map<String, Object> struct) {
+        this.setStruct(struct);
     }
 
     @Override

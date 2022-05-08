@@ -1,6 +1,5 @@
 package top.sxrhhh.metaweblogClient.struct;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,6 +29,14 @@ public class BlogInfo extends Struct{
         this.blogid = blogid;
         this.url = url;
         this.blogName = blogName;
+    }
+
+    /**
+     * 直接通过结构体struct对象创建的构造方法.
+     * @param struct 传入一个Map对象
+     */
+    public BlogInfo(Map<String, Object> struct) {
+        this.setStruct(struct);
     }
 
     @Override

@@ -17,6 +17,7 @@ public abstract class Struct implements HasMap {
     // 内部Map存储结构体
     protected Map<String, Object> map = new HashMap<>();
 
+
     /**
      *
      * @author Sxrhhh
@@ -50,6 +51,16 @@ public abstract class Struct implements HasMap {
     public abstract void setStruct(Map<String, Object> struct);
 
 
+//    public static Map<String, Object> getMapFromObject(Object obj) {
+//        if (obj == null) {
+//            return null;
+//        }
+//        if (obj instanceof Map<String, Object>) {
+//            return (Map<String, Object>) obj;
+//        } else {
+//            return null;
+//        }
+//    }
 
 
 

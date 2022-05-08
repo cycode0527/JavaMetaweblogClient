@@ -139,6 +139,33 @@ public class Client {
     }
 
     /**
+     * 获取最近n条的Post对象.
+     * <p>还未测试.
+     * @param blogid 博客ID
+     * @param username 用户名
+     * @param password 密码
+     * @param numberOfPosts 返回最近博客的数量
+     * @return Post[] 一个存储着Post的数组
+     * @throws XmlRpcException <br>
+     * 与wordpress的editor.md不兼容<br>
+     * 可能为参数不全或博客api地址不对
+     */
+    public Post[] getRecentPosts(String blogid, String username, String password, Integer numberOfPosts) throws XmlRpcException {
+        Post[] posts = null;
+        Object[] params = new Object[]{blogid, username, password, numberOfPosts};
+        Object[] result = (Object[]) client.execute("metaWeblog.getRecentPosts", params);
+        // 获取post的数量
+        posts = new Post[result.length];
+        for (int i = 0; i < result.length; i++) {
+            // 将结果存入posts
+            posts[i] = new Post((Map<String, Object>) result[i]);
+        }
+        return posts;
+
+
+    }
+
+    /**
      * 新建一个媒体(上传媒体).
      * <p>向博客的媒体库中上传一个媒体,通常为图片和视频文件,其他的应该也可以,
      * 遵循Internet的MIME类型,方便上传文件(比较重要).

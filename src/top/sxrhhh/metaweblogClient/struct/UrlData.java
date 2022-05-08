@@ -20,7 +20,6 @@ public class UrlData extends Struct {
     public UrlData() {
     }
 
-
     /**
      * 带参构造方法
      * @author Sxrhhh
@@ -29,6 +28,14 @@ public class UrlData extends Struct {
      */
     public UrlData(String url) {
         this.url = url;
+    }
+
+    /**
+     * 直接通过结构体struct对象创建的构造方法.
+     * @param struct 传入一个Map对象
+     */
+    public UrlData(Map<String, Object> struct) {
+        this.setStruct(struct);
     }
 
     @Override
