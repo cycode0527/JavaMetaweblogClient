@@ -3,10 +3,7 @@ package top.sxrhhh.metaweblogClient.client;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
-import top.sxrhhh.metaweblogClient.struct.FileData;
-import top.sxrhhh.metaweblogClient.struct.Post;
-import top.sxrhhh.metaweblogClient.struct.UrlData;
-import top.sxrhhh.metaweblogClient.struct.WpCategory;
+import top.sxrhhh.metaweblogClient.struct.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -105,6 +102,49 @@ public class Client {
         result = client.execute("blogger.deletePost", params);
 
         return (boolean) result;
+
+    }
+
+    /**
+     * 编辑一个存在的文章.
+     * <p>如果成功返回true
+     * @param postid 文章ID
+     * @param username 用户名
+     * @param password 密码
+     * @param post 上传的新文章
+     * @param publish 是否公开
+     * @return Object 如果编辑成功,返回true(谁知道为什么它返回any类呢)
+     * @throws XmlRpcException 可能为参数不全或博客api地址不对
+     */
+    public Object editPost(String postid, String username, String password, Post post, boolean publish) throws XmlRpcException {
+        Object params[] = new Object[]{postid, username, password, post.getStruct(), publish};
+        Object result = client.execute("metaWeblog.editPost", params);
+
+        return result;
+    }
+
+    /**
+     * 获取博客分类列表.
+     * @param blogid 博客ID(默认为0或"default"
+     * @param username 用户名
+     * @param password 密码
+     * @return cates 返回存储分类的数组
+     * @throws XmlRpcException 可能为参数不全或博客api地址不对
+     */
+    public CategoryInfo[] getCategories(String blogid, String username, String password) throws XmlRpcException {
+        Object[] params = new Object[]{blogid, username, password};
+        Object result[] = null;
+        CategoryInfo[] cates = null;
+        result = (Object[]) client.execute("metaWeblog.getCategories", params);
+        if (result != null) {
+            int length = result.length;
+            cates = new CategoryInfo[length];
+            for (int i = 0; i < length; i++) {
+                cates[i] = new CategoryInfo((Map<String, Object>) result[i]);
+            }
+        }
+
+        return cates;
 
     }
 
