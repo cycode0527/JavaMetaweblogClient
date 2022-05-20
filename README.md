@@ -4,7 +4,6 @@
 
 **[点击这里](https://github.com/cycode0527/JavaMetaweblogClient)查看项目**
 
-[TOC]
 
 >  不知你是否会遇到下面这样的情况:想要通过java上传博客,结果却发现api的使用有些复杂。没关系，这里帮你解决了api的问题。在使用Metaweblog的时候，只需要调用网页上同名的方法就好了，一键发送命令，感受调用api的快感。
 
@@ -101,7 +100,7 @@ result = client.newPost("default", "S*****u", "*****", post, false);
 
 至于其他的代码，通常IDE会自己生成，以及提醒你参数的填入。其中Post参数需要直接填入本项目已创建好的`Post`类，而不是自己写一个`Map<String,Object>`.
 
-### 5. 最后的话
+## 5. 最后的话
 
 作为新手程序员和他的第一个api,有很多的信息都在javadoc文档里。如果有什么问题，尽量去查看docs文档，有很多位置都可以查看文档。
 
